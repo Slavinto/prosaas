@@ -1,12 +1,7 @@
 import { ToggleThemeButton } from "@/components/ui/toggle-theme-button";
 
 const Home = () => {
-    return (
-        <div>
-            Home
-            <ToggleThemeButton />
-        </div>
-    );
+    return <div>Home</div>;
 };
 
 export default Home;
