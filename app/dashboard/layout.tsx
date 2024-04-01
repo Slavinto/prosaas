@@ -16,6 +16,7 @@ const DashboardLayout = ({
                     Ullam at commodi itaque qui beatae aliquid laborum natus,
                     tempora tenetur quibusdam, asperiores odio, minima in.
                     Officia vitae animi odio quibusdam numquam.
+                    <>{children}</>
                 </main>
             </div>
         </div>
