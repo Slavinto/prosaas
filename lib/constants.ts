@@ -8,12 +8,12 @@ export const navItems = [
     },
     {
         name: "Settings",
-        href: "/settings",
+        href: "/dashboard/settings",
         icon: Settings,
     },
     {
         name: "Billing",
-        href: "/billing",
+        href: "/dashboard/billing",
         icon: CreditCard,
     },
 ];
