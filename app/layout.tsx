@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/ui/navbar";
 import { SessionProvider } from "@/components/contexts/session-provider";
 import { auth } from "@/lib/auth";
+import { getUser } from "@/lib/prisma-crud";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,20 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     const session = await auth();
+    let email = "";
+    let colorScheme = "";
+    if (!!session?.user?.email) {
+        email = session.user.email;
+    }
+
+    const dbUser = await getUser({ email });
+
+    if (dbUser && typeof dbUser === "object" && "colorScheme" in dbUser) {
+        colorScheme = dbUser.colorScheme as string;
+    }
+
     return (
-        <html lang='en'>
+        <html lang='en' className={`${colorScheme}`}>
             <body className={`${inter.className}`}>
                 <SessionProvider session={session}>
                     <ThemeProvider

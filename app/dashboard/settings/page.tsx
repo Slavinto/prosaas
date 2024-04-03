@@ -1,7 +1,9 @@
+import ButtonForm from "@/components/ui/button-form";
 import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
@@ -17,6 +19,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { submitSettingsForm } from "@/lib/actions";
 import { auth } from "@/lib/auth";
 import { getUser } from "@/lib/prisma-crud";
 import type { DbUser } from "@/lib/types";
@@ -49,6 +52,10 @@ const SettingsPage = async () => {
             </h1>
         );
     }
+    const submitSettingsFormWithEmail = submitSettingsForm.bind(
+        null,
+        dbUser.email
+    );
     return (
         <div className='grid items-start gap-8'>
             <div className='flex items-center justify-between px-2'>
@@ -60,7 +67,7 @@ const SettingsPage = async () => {
                 </div>
             </div>
             <Card>
-                <form>
+                <form action={submitSettingsFormWithEmail}>
                     <CardHeader>
                         <CardTitle>Profile Information</CardTitle>
                         <CardDescription>
@@ -127,30 +134,15 @@ const SettingsPage = async () => {
                                             >
                                                 Purple
                                             </SelectItem>
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-yellow'
-                                            >
-                                                Yellow
-                                            </SelectItem>
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-orange'
-                                            >
-                                                Orange
-                                            </SelectItem>
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-rose'
-                                            >
-                                                Rose
-                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
                             </div>
                         </div>
                     </CardContent>
+                    <CardFooter>
+                        <ButtonForm title='Submit' classNames='theme-button' />
+                    </CardFooter>
                 </form>
             </Card>
         </div>

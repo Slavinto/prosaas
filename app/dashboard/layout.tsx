@@ -24,10 +24,8 @@ const DashboardLayout = async ({
         profileImage: session.user.image || "",
     };
     const dbuser = await getUser(userData);
-    console.log({ dbuser });
     if (!dbuser) {
         const dbuser = await createUser(userData);
-        console.log({ dbuser });
     }
     return (
         <div className='flex flex-col space-y-6 mt-10'>
