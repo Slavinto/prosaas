@@ -33,7 +33,7 @@ export default async function RootLayout({
     }
 
     return (
-        <html lang='en' className={`${colorScheme}`}>
+        <html lang='en' className={`${colorScheme}` || "theme-purple"}>
             <body className={`${inter.className}`}>
                 <SessionProvider session={session}>
                     <ThemeProvider

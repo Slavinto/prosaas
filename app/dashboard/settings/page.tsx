@@ -1,61 +1,12 @@
-import ButtonForm from "@/components/ui/button-form";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { submitSettingsForm } from "@/lib/actions";
+import SettingsForm from "@/components/ui/settings-form";
 import { auth } from "@/lib/auth";
 import { getUser } from "@/lib/prisma-crud";
 import type { DbUser } from "@/lib/types";
 
-const SettingsPage = async () => {
-    let session = undefined;
-    let dbUser = undefined;
-    try {
-        session = await auth();
-        if (
-            !session ||
-            !session.user ||
-            !session.user.email ||
-            !session.user.name
-        ) {
-            throw new Error("Error. Failed to get user session.");
-        } else {
-            dbUser = (await getUser({ email: session.user.email })) as DbUser;
-            if (!dbUser) {
-                throw new Error("Error. User not found in database.");
-            }
-        }
-    } catch (error) {
-        console.error(JSON.stringify(error));
-        return (
-            <h1>
-                {error instanceof Error
-                    ? error.message
-                    : "Error. Failed to get user data."}
-            </h1>
-        );
-    }
-    const submitSettingsFormWithEmail = submitSettingsForm.bind(
-        null,
-        dbUser.email
-    );
+const SettingsPage = () => {
+    // let session = undefined;
+    // let dbUser = undefined;
+
     return (
         <div className='grid items-start gap-8'>
             <div className='flex items-center justify-between px-2'>
@@ -66,85 +17,7 @@ const SettingsPage = async () => {
                     </p>
                 </div>
             </div>
-            <Card>
-                <form action={submitSettingsFormWithEmail}>
-                    <CardHeader>
-                        <CardTitle>Profile Information</CardTitle>
-                        <CardDescription>
-                            please provide information about yourself
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className='space-y-2'>
-                            <div className='space-y-1'>
-                                <Label>Name</Label>
-                                <Input
-                                    name='name'
-                                    type='text'
-                                    id='name'
-                                    placeholder='Enter your name'
-                                    defaultValue={dbUser.name}
-                                />
-                            </div>
-                            <div className='space-y-1'>
-                                <Label>Email</Label>
-                                <Input
-                                    name='email'
-                                    defaultValue={dbUser.email}
-                                    type='email'
-                                    id='email'
-                                    placeholder='Enter your name'
-                                    disabled
-                                />
-                            </div>
-                            <div className='space-y-1'>
-                                <Label>Color Scheme</Label>
-                                <Select
-                                    name='color'
-                                    defaultValue={dbUser.colorScheme}
-                                >
-                                    <SelectTrigger className='w-full'>
-                                        <SelectValue placeholder='Select a color' />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Colors</SelectLabel>
-                                            <DropdownMenuSeparator />
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-red'
-                                            >
-                                                Red
-                                            </SelectItem>
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-green'
-                                            >
-                                                Green
-                                            </SelectItem>
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-blue'
-                                            >
-                                                Blue
-                                            </SelectItem>
-                                            <SelectItem
-                                                className='cursor-pointer'
-                                                value='theme-purple'
-                                            >
-                                                Purple
-                                            </SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <ButtonForm title='Submit' classNames='theme-button' />
-                    </CardFooter>
-                </form>
-            </Card>
+            <SettingsForm />
         </div>
     );
 };

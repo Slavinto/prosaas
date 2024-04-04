@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@/lib/db";
 
 import type { DashboardUserData } from "@/lib/types";
