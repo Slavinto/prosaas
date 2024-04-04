@@ -49,7 +49,6 @@ const SettingsForm = () => {
                     const dbUser = (await getUser({
                         email: session.user.email,
                     })) as DbUser;
-                    console.log(dbUser);
                     if (!dbUser) {
                         throw new Error("Error. User not found in database.");
                     } else {

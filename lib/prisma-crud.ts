@@ -4,7 +4,6 @@ import prisma from "@/lib/db";
 
 import type { DashboardUserData } from "@/lib/types";
 import { revalidatePath } from "next/cache";
-import { join } from "path";
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 export const getUser = async ({ email }: { email: string }) => {
