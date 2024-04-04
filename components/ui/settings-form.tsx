@@ -35,37 +35,39 @@ const SettingsForm = () => {
     const [username, setUsername] = useState("");
     const [colorScheme, setColorScheme] = useState("");
 
-    useEffect(() => {
-        const fetchDbUser = async () => {
-            try {
-                if (
-                    !session ||
-                    !session.user ||
-                    !session.user.email ||
-                    !session.user.name
-                ) {
-                    throw new Error("Error. Failed to get user session.");
+    const fetchDbUser = async () => {
+        try {
+            if (
+                !session ||
+                !session.user ||
+                !session.user.email ||
+                !session.user.name
+            ) {
+                throw new Error("Error. Failed to get user session.");
+            } else {
+                const dbUser = (await getUser({
+                    email: session.user.email,
+                })) as DbUser;
+                console.log(dbUser);
+                if (!dbUser) {
+                    throw new Error("Error. User not found in database.");
                 } else {
-                    const dbUser = (await getUser({
-                        email: session.user.email,
-                    })) as DbUser;
-                    if (!dbUser) {
-                        throw new Error("Error. User not found in database.");
-                    } else {
-                        setDbUser(dbUser);
-                        setUsername(dbUser.name);
-                        setColorScheme(dbUser.colorScheme);
-                    }
+                    setDbUser(dbUser);
+                    console.log({ dbUser });
+                    setUsername(dbUser.name);
+                    setColorScheme(dbUser.colorScheme);
                 }
-            } catch (error) {
-                console.error(JSON.stringify(error));
-                redirect("/");
             }
-        };
-
+        } catch (error) {
+            console.error(JSON.stringify(error));
+            redirect("/");
+        }
+    };
+    useEffect(() => {
         fetchDbUser();
     }, [session]);
-    const formResetHandler = () => {
+
+    const formResetHandler = async () => {
         setUsername(dbUser?.name ?? "");
         setColorScheme(dbUser?.colorScheme || "theme-purple");
     };
@@ -78,7 +80,12 @@ const SettingsForm = () => {
     return (
         <Suspense>
             <Card>
-                <form action={submitSettingsFormWithEmail}>
+                <form
+                    action={({ ...args }) => {
+                        submitSettingsFormWithEmail(args);
+                        fetchDbUser();
+                    }}
+                >
                     <CardHeader>
                         <CardTitle>Profile Information</CardTitle>
                         <CardDescription>
