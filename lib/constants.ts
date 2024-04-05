@@ -17,3 +17,58 @@ export const navItems = [
         icon: CreditCard,
     },
 ];
+
+export const billingPlans = [
+    {
+        title: "Basic",
+        price: "5",
+        planFeatures: ["Automated Recurring Billing", "Automated Invoicing"],
+    },
+    {
+        title: "Standard",
+        price: "15",
+
+        planFeatures: [
+            "Automated Recurring Billing",
+            "Automated Invoicing",
+            "Product Catalog Access",
+        ],
+    },
+    {
+        title: "Extended",
+        price: "25",
+        planFeatures: [
+            "Automated Recurring Billing",
+            "Automated Invoicing",
+            "Product Catalog Access",
+            "Seamless Checkout",
+        ],
+    },
+    {
+        title: "Platinum",
+        price: "35",
+        planFeatures: [
+            "Automated Recurring Billing",
+            "Automated Invoicing",
+            "Product Catalog Access",
+            "Seamless Checkout",
+            "Flexible Payment Options",
+            "Plug Revenue Leaks",
+        ],
+    },
+    {
+        title: "VIP",
+        price: "55",
+        planFeatures: [
+            "Automated Recurring Billing",
+            "Automated Invoicing",
+            "Product Catalog Access",
+            "Seamless Checkout",
+            "Flexible Payment Options",
+            "Plug Revenue Leaks",
+            "Effortless Accounting",
+            "A Single Source of Truth",
+            "Subscription Analytics",
+        ],
+    },
+];
